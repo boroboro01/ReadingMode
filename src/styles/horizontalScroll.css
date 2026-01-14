@@ -1,0 +1,49 @@
+.horizontal-wrapper {
+  position: relative;
+}
+
+/* 스크롤 영역 */
+.horizontal-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+
+  scrollbar-width: none; /* Firefox */
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
+
+/* 버튼 기본 상태 (숨김) */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: #f9fafb;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.scroll-btn.left {
+  left: 0;
+}
+
+.scroll-btn.right {
+  right: 0;
+}
+
+/* ⭐️ 핵심: 래퍼 hover 시 버튼 표시 */
+.horizontal-wrapper:hover .scroll-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
