@@ -8,64 +8,69 @@ import type { Video } from "../types/video";
 
 const mockVideos = [
   {
-    youtubeId: "Dx5qFachd3A",
-    title: "어느 책이든 어울리는 잔잔한 재즈",
-    author: "Quiet Jazz",
-    duration: "1:12:40",
+    youtubeId: "MYPVQccHhAQ",
+    title:
+      "4K Cozy Coffee Shop with Smooth Piano Jazz Music for Relaxing, Studying and Working",
+    author: "Relaxing Jazz Piano",
+    duration: "3:35:22",
   },
   {
-    youtubeId: "V1Pl8CzNzCw",
-    title: "고풍스러운 도서관 분위기",
-    author: "Library Sound",
-    duration: "45:10",
+    youtubeId: "nv_2rz5BFDA",
+    title: "Just Thinking...Retro Jazz",
+    author: "Pause,maybe?",
+    duration: "2:54:00",
   },
   {
-    youtubeId: "5qap5aO4i9A",
-    title: "백색소음과 함께 집중하기",
-    author: "Focus Room",
-    duration: "2:03:00",
+    youtubeId: "3SGNtFQ1v3M",
+    title: "Chill Jazz 🎼 Smooth Jazz Music",
+    author: "Jazzip",
+    duration: "3:17:52",
   },
   {
-    youtubeId: "DWcJFNfaw9c",
-    title: "Rainy Night Jazz",
-    author: "Night Jazz",
-    duration: "3:10:22",
+    youtubeId: "8zr_bWR8Yk4",
+    title:
+      "Charming Fall Jazz in Cozy Outdoor Café 🍂 Soft Jazz Music for Working, Reading, Study",
+    author: "Cozy Outdoor Jazz",
+    duration: "3:14:02",
   },
   {
-    youtubeId: "kgx4WGK0oNU",
-    title: "Cozy Cafe Music",
-    author: "Cafe Mood",
-    duration: "58:44",
+    youtubeId: "U9Ji1RoA4hk",
+    title:
+      "🦃 Snoopy Thanksgiving Jazz ☕ Cozy Holiday Music for Gratitude and Good Vibes 🍂",
+    author: "EASE JAZZ",
+    duration: "1:07:30",
   },
   {
-    youtubeId: "hHW1oY26kxQ",
-    title: "Deep Focus Piano",
-    author: "Piano Room",
-    duration: "1:30:05",
+    youtubeId: "0FEVmjeS6XM",
+    title:
+      "DISNEY 50 Jazz Covers from Disney Classics ☕ BGM Music for Studying & Working",
+    author: "Massiomo Roberti",
+    duration: "2:42:41",
   },
   {
-    youtubeId: "lTRiuFIWV54",
-    title: "Late Night Reading Ambience",
-    author: "Reading Lab",
-    duration: "2:45:18",
+    youtubeId: "y7gfL33XA70",
+    title:
+      "BGM The Beatles in JAZZ 30 Greatest Hits - Relaxing Guitar Music for Studying, Working, Running",
+    author: "Massiomo Roberti",
+    duration: "1:33:39",
   },
   {
-    youtubeId: "7NOSDKb0HlU",
-    title: "Minimal Jazz for Work",
-    author: "Work Jazz",
-    duration: "1:05:12",
+    youtubeId: "ecAR5gVCRmE",
+    title: "Playlist | 픽사, 재즈",
+    author: "JazzNe",
+    duration: "10:08:05",
   },
   {
-    youtubeId: "7NOSDKb0HlU",
-    title: "Minimal Jazz for Work",
-    author: "Work Jazz",
-    duration: "1:05:12",
+    youtubeId: "ziOus5-1kXw",
+    title: "coulou's vinyl cafe (no. 1) - jazz selections",
+    author: "COULOU",
+    duration: "1:22:54",
   },
   {
-    youtubeId: "7NOSDKb0HlU",
-    title: "Minimal Jazz for Work",
-    author: "Work Jazz",
-    duration: "1:05:12",
+    youtubeId: "7lq6e4Lu4B8",
+    title: "Playlist | 지브리, 재즈 | GHIBLI Jazz",
+    author: "JazzNe",
+    duration: "10:37:30",
   },
 ];
 
@@ -104,6 +109,7 @@ function Home() {
               author={v.author}
               duration={v.duration}
               onSelect={() => handleSelect(v)}
+              isSelected={selectedVideo?.id === v.youtubeId}
             />
           ))}
         </HorizontalList>

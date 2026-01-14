@@ -7,15 +7,18 @@ type Props = {
   duration: string;
   // when provided, parent handles playback; VideoCard should not render iframe
   onSelect?: () => void;
+  isSelected?: boolean;
 };
 
-function VideoCard({ youtubeId, title, author, duration, onSelect }: Props) {
+function VideoCard({ youtubeId, title, author, duration, onSelect, isSelected }: Props) {
   const [playing, setPlaying] = useState(false);
   const thumbnailUrl = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
   const embedUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
 
   const handleActivate = () => {
     if (onSelect) {
+      // prevent re-selecting the already playing video
+      if (isSelected) return;
       onSelect();
     } else {
       setPlaying(true);
@@ -30,6 +33,7 @@ function VideoCard({ youtubeId, title, author, duration, onSelect }: Props) {
         role="button"
         tabIndex={0}
         onClick={handleActivate}
+        aria-disabled={!!onSelect && !!isSelected}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") handleActivate();
         }}
