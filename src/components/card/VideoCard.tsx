@@ -5,12 +5,22 @@ type Props = {
   title: string;
   author: string;
   duration: string;
+  // when provided, parent handles playback; VideoCard should not render iframe
+  onSelect?: () => void;
 };
 
-function VideoCard({ youtubeId, title, author, duration }: Props) {
+function VideoCard({ youtubeId, title, author, duration, onSelect }: Props) {
   const [playing, setPlaying] = useState(false);
   const thumbnailUrl = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
   const embedUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
+
+  const handleActivate = () => {
+    if (onSelect) {
+      onSelect();
+    } else {
+      setPlaying(true);
+    }
+  };
 
   return (
     <div className="video-card">
@@ -19,12 +29,12 @@ function VideoCard({ youtubeId, title, author, duration }: Props) {
         className="video-thumbnail"
         role="button"
         tabIndex={0}
-        onClick={() => setPlaying(true)}
+        onClick={handleActivate}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") setPlaying(true);
+          if (e.key === "Enter" || e.key === " ") handleActivate();
         }}
       >
-        {!playing ? (
+        {!playing || !!onSelect ? (
           <>
             <img src={thumbnailUrl} alt={title} />
             <button className="video-play-btn" aria-label={`Play ${title}`}>

@@ -1,0 +1,147 @@
+/* Container is full viewport height but translated down to show mini bar */
+.player-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh; /* full height container; we control visible area with translateY */
+  z-index: 9999;
+  overflow: hidden;
+  transition: transform 0.4s ease-in-out;
+  will-change: transform;
+  background: #0b0b0b;
+  color: #fff;
+}
+
+/* Hidden fully off-screen */
+.player-container.hidden {
+  transform: translateY(100%);
+}
+
+/* Mini view: translate so only 70px bar shows */
+.player-container.mini {
+  transform: translateY(calc(100% - 70px));
+}
+
+/* Expanded: fill the screen */
+.player-container.expanded {
+  transform: translateY(0);
+}
+
+/* Mini bar styling */
+.mini-bar {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+}
+
+.mini-bar .thumb {
+  width: 94px;
+  height: 53px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.mini-bar .meta {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mini-bar .title {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.mini-bar .author {
+  font-size: 12px;
+  color: #cfcfcf;
+}
+
+.play-btn {
+  margin-left: auto;
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Full player area */
+.player-full {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ensure the full player is a positioned container for the top handle */
+.player-full {
+  position: relative;
+}
+
+/* A clickable area at the top of the expanded player to collapse it */
+.collapse-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  z-index: 1001;
+  /* visually subtle: slight gradient so users perceive the area */
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0));
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.close-btn {
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.video-info .full-title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.video-info .full-sub {
+  font-size: 13px;
+  color: #cfcfcf;
+}
+
+.youtube-wrapper {
+  flex: 1 1 auto;
+  background: black;
+}
+
+/* small responsive tweaks */
+@media (max-width: 640px) {
+  .mini-bar .thumb {
+    width: 120px;
+    height: 68px;
+  }
+  .mini-bar .title {
+    font-size: 13px;
+  }
+}

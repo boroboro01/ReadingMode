@@ -1,7 +1,10 @@
+import { useState } from "react";
 import MainLayout from "../components/layout/MainLayout";
 import ContentContainer from "../components/layout/ContentContainer";
 import HorizontalList from "../components/list/HorizontalList";
 import VideoCard from "../components/card/VideoCard";
+import Player from "../components/Player/Player";
+import type { Video } from "../types/video";
 
 const mockVideos = [
   {
@@ -67,6 +70,24 @@ const mockVideos = [
 ];
 
 function Home() {
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+
+  const handleSelect = (v: {
+    youtubeId: string;
+    title: string;
+    author: string;
+    duration: string;
+  }) => {
+    const thumbnail = `https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg`;
+    setSelectedVideo({
+      id: v.youtubeId,
+      title: v.title,
+      author: v.author,
+      duration: v.duration,
+      thumbnail,
+    });
+  };
+
   return (
     <MainLayout>
       <ContentContainer>
@@ -82,10 +103,17 @@ function Home() {
               title={v.title}
               author={v.author}
               duration={v.duration}
+              onSelect={() => handleSelect(v)}
             />
           ))}
         </HorizontalList>
       </div>
+
+      {/* Player fixed to bottom; appears when `selectedVideo` is non-null */}
+      <Player
+        selectedVideo={selectedVideo}
+        onClose={() => setSelectedVideo(null)}
+      />
     </MainLayout>
   );
 }
