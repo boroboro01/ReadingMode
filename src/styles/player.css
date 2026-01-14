@@ -9,8 +9,8 @@
   overflow: hidden;
   transition: transform 0.4s ease-in-out;
   will-change: transform;
-  background: #0b0b0b;
-  color: #fff;
+  background: #191919;
+  color: #f9fafb;
 }
 
 /* Hidden fully off-screen */
@@ -35,7 +35,7 @@
   align-items: center;
   gap: 12px;
   padding: 8px 12px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
+  background: #151515;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
   cursor: pointer;
 }
@@ -70,7 +70,7 @@
 .play-btn {
   margin-left: auto;
   background: transparent;
-  color: white;
+  color: #f9fafb;
   border: none;
   font-size: 18px;
   width: 44px;
@@ -84,6 +84,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  align-items: center; /* center content horizontally */
 }
 
 /* ensure the full player is a positioned container for the top handle */
@@ -108,13 +109,11 @@
   align-items: center;
   gap: 12px;
   padding: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  background: rgba(0, 0, 0, 0.6);
 }
 
 .close-btn {
   background: transparent;
-  color: #fff;
+  color: #f9fafb;
   border: none;
   font-size: 20px;
   cursor: pointer;
@@ -127,12 +126,27 @@
 
 .video-info .full-sub {
   font-size: 13px;
-  color: #cfcfcf;
+  color: #f9fafb;
 }
 
 .youtube-wrapper {
-  flex: 1 1 auto;
-  background: black;
+  position: relative;
+  width: 100%; /* 기본적으로 가로를 채우되 */
+  max-width: 1000px; /* PC에서도 이 너비 이상은 안 커지게 */
+  aspect-ratio: 16 / 9; /* 가로 세로 비율 고정 */
+  max-height: 60vh; /* 세로가 화면의 60%를 넘지 않게 제한 */
+  margin: 20px auto; /* 중앙 정렬 */
+  background: #333;
+}
+
+/* 내부 iframe이 위에서 제한한 영역을 꽉 채우게 함 */
+.youtube-wrapper iframe,
+.youtube-wrapper > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* small responsive tweaks */

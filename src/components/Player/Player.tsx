@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import type { YouTubeProps } from "react-youtube";
-import "../../components/Player/player.css";
+import "../../styles/player.css";
 import type { Video } from "../../types/video";
 
 type Props = {
