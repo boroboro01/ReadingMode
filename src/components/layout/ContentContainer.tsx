@@ -6,9 +6,8 @@ function ContentContainer({ children }: Props) {
   return (
     <div
       style={{
-        maxWidth: "960px",
         margin: "0 auto",
-        padding: "32px 20px",
+        padding: "20px 20px",
       }}
     >
       {children}

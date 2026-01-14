@@ -8,42 +8,63 @@
   gap: 16px;
   overflow-x: auto;
   padding-bottom: 8px;
-
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 
 .horizontal-scroll::-webkit-scrollbar {
-  display: none; /* Chrome */
+  display: none;
 }
 
-/* 버튼 기본 상태 (숨김) */
-.scroll-btn {
+/* 디즈니 플러스 스타일 네비게이션 */
+.scroll-nav {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(0, 0, 0, 0.6);
-  color: #f9fafb;
-  cursor: pointer;
+  top: 0;
+  bottom: 0;
+  width: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
+  border: none;
+  background: none;
   z-index: 10;
 }
 
-.scroll-btn.left {
-  left: 0;
-}
-
-.scroll-btn.right {
-  right: 0;
-}
-
-/* ⭐️ 핵심: 래퍼 hover 시 버튼 표시 */
-.horizontal-wrapper:hover .scroll-btn {
+/* hover 시만 등장 */
+.horizontal-wrapper:hover .scroll-nav {
   opacity: 1;
   pointer-events: auto;
+  cursor: pointer;
+}
+
+/* 좌측 */
+.scroll-nav.left {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(52, 52, 52, 0.85),
+    rgba(52, 52, 52, 0)
+  );
+}
+
+/* 우측 */
+.scroll-nav.right {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(52, 52, 52, 0.85),
+    rgba(52, 52, 52, 0)
+  );
+}
+
+/* 화살표 아이콘 */
+.scroll-nav svg {
+  width: 32px;
+  height: 32px;
+  stroke: #ffffff;
+  stroke-width: 2.5;
 }

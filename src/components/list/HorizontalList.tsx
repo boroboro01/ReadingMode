@@ -17,14 +17,16 @@ function HorizontalList({ children }: Props) {
 
   return (
     <div className="horizontal-wrapper">
-      {/* 왼쪽 버튼 */}
-      <button className="scroll-btn left" onClick={scrollLeft}>
-        &lt;
+      <button className="scroll-nav left" onClick={scrollLeft}>
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
       </button>
 
-      {/* 오른쪽 버튼 */}
-      <button className="scroll-btn right" onClick={scrollRight}>
-        &gt;
+      <button className="scroll-nav right" onClick={scrollRight}>
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 6l6 6-6 6" />
+        </svg>
       </button>
 
       {/* 스크롤 영역 */}
