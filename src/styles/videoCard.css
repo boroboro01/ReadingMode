@@ -30,6 +30,7 @@
 .video-thumbnail[aria-disabled="true"] {
   position: relative;
   cursor: default;
+  pointer-events: none;
 }
 
 .video-thumbnail[aria-disabled="true"]::after {

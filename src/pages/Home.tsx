@@ -105,23 +105,6 @@ function Home() {
     });
   };
 
-  const playNextVideo = () => {
-    if (!selectedVideo) return;
-
-    // 현재 영상의 위치(인덱스) 찾기
-    const currentIndex = mockVideos.findIndex(
-      (v) => v.youtubeId === selectedVideo.id
-    );
-    const nextIndex = currentIndex + 1;
-
-    // 다음 영상이 있으면 재생, 없으면 첫 번째 영상으로 돌아감
-    if (nextIndex < mockVideos.length) {
-      handleSelect(mockVideos[nextIndex]);
-    } else {
-      handleSelect(mockVideos[0]); // 반복 재생 모드
-    }
-  };
-
   return (
     <MainLayout>
       <ContentContainer>
@@ -137,8 +120,8 @@ function Home() {
               title={v.title}
               author={v.author}
               duration={v.duration}
-              onSelect={() => handleSelect(v)}
               isSelected={selectedVideo?.id === v.youtubeId}
+              onSelect={() => handleSelect(v)}
             />
           ))}
         </HorizontalList>

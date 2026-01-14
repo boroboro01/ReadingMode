@@ -163,7 +163,9 @@
   background: #333;
 }
 
-.player-controls { display: none; }
+.player-controls {
+  display: none;
+}
 
 .volume-icon {
   font-size: 16px;

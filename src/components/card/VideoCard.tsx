@@ -10,7 +10,14 @@ type Props = {
   isSelected?: boolean;
 };
 
-function VideoCard({ youtubeId, title, author, duration, onSelect, isSelected }: Props) {
+function VideoCard({
+  youtubeId,
+  title,
+  author,
+  duration,
+  onSelect,
+  isSelected,
+}: Props) {
   const [playing, setPlaying] = useState(false);
   const thumbnailUrl = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
   const embedUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
@@ -31,10 +38,11 @@ function VideoCard({ youtubeId, title, author, duration, onSelect, isSelected }:
       <div
         className="video-thumbnail"
         role="button"
-        tabIndex={0}
+        tabIndex={isSelected ? -1 : 0}
         onClick={handleActivate}
         aria-disabled={!!onSelect && !!isSelected}
         onKeyDown={(e) => {
+          if (isSelected) return;
           if (e.key === "Enter" || e.key === " ") handleActivate();
         }}
       >
