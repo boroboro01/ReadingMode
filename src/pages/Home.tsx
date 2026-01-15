@@ -4,8 +4,8 @@ import ContentContainer from "../components/layout/ContentContainer";
 import HorizontalList from "../components/list/HorizontalList";
 import VideoCard from "../components/card/VideoCard";
 import Player from "../components/Player/Player";
-import PlaylistTags from "../components/common/PlaylistTags";
 import type { Video } from "../types/video";
+import logo from "../assets/logo.png";
 
 // 1. 통합 데이터 가져오기
 import videoData from "../data/videoData.json";
@@ -23,13 +23,34 @@ function Home() {
       author: v.author,
       duration: v.duration,
       thumbnail,
-      youtube_id: v.youtube_id,
       playlist_id: v.playlist_id,
     });
   };
 
   return (
     <MainLayout>
+      {/* 헤더 UI */}
+      <header
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          padding: "12px 0 12px 20px",
+          marginBottom: "40px",
+          backgroundColor: "#191919",
+        }}
+      >
+        <img
+          src={logo}
+          alt="독서 모드 로고"
+          style={{
+            height: "80px",
+            width: "auto",
+            marginBottom: "24px",
+          }}
+        />
+      </header>
+
       {/* 2. 모든 플레이리스트를 순회하며 렌더링 */}
       {videoData.playlists.map((playlist) => {
         // 해당 플리에 속한 영상들만 필터링
@@ -45,12 +66,10 @@ function Home() {
             <ContentContainer>
               <h2
                 className="page-title"
-                style={{ fontSize: "1.5rem", marginBottom: "8px" }}
+                style={{ fontSize: "1.5rem", marginBottom: "16px" }}
               >
                 {playlist.title}
               </h2>
-              
-              <PlaylistTags playlist={playlist} />
             </ContentContainer>
 
             <div style={{ padding: "0 20px" }}>
