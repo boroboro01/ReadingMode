@@ -4,7 +4,7 @@ export interface Video {
   author: string;
   duration: string;
   thumbnail: string;
-  playlistIds: string[]; // 중요: 이 영상이 속한 플리 ID 목록
+  playlist_id: string; // Changed from playlistIds to playlistId to match JSON
 }
 
 export interface Playlist {
