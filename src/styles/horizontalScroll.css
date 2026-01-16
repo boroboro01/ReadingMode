@@ -2,6 +2,8 @@
   position: relative;
   /* ContentContainer의 좌측 패딩(60px)을 상쇄하여 화면 끝까지 확장 */
   margin-left: -60px;
+  overflow: visible; /* 확대된 썸네일이 잘리지 않도록 */
+  padding-top: 8px; /* 썸네일 확대를 위한 최소 상단 여백 */
 }
 
 /* 스크롤 영역 */
@@ -9,7 +11,8 @@
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  padding: 0 60px 8px 60px; /* 좌우 양쪽에 60px 패딩 추가 */
+  overflow-y: visible; /* 수직 방향으로는 넘치는 것을 허용 */
+  padding: 5px 60px 8px 60px; /* 상단 패딩을 5px로 줄임 */
   scrollbar-width: none;
 
   /* 좌우 끝에 페이드 마스크 적용 */
