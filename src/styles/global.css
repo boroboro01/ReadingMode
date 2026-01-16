@@ -19,3 +19,117 @@ body {
   color: #e6e6e6;
   text-align: left;
 }
+
+/* ======================
+   Playlist Tags
+   ====================== */
+
+.playlist-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.playlist-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  background: rgba(10, 10, 10, 0.15);
+  color: #c5c5c5;
+  border: 1px solid rgba(10, 10, 10, 0.25);
+  border-radius: 8px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* ======================
+   Tag Filter
+   ====================== */
+
+.tag-filter {
+  margin-bottom: 32px;
+}
+
+.tag-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.tag-filter-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #e6e6e6;
+}
+
+.clear-all-btn {
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  color: #9ca3af;
+  border: 1px solid #4a4a4a;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-all-btn:hover {
+  background: rgba(156, 163, 175, 0.1);
+  color: #e5e7eb;
+}
+
+.tag-filter-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  background: rgba(55, 55, 55, 0.8);
+  color: #c5c5c5;
+  border: 1px solid rgba(100, 100, 100, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.filter-tag:hover {
+  background: rgba(255, 193, 7, 0.2);
+  color: #fbbf24;
+  border-color: rgba(255, 193, 7, 0.4);
+}
+
+.filter-tag.active {
+  background: rgba(245, 158, 11, 0.3);
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.6);
+}
+
+/* ======================
+   Tag Categories
+   ====================== */
+
+.tag-category {
+  margin-bottom: 20px;
+}
+
+.tag-category:last-child {
+  margin-bottom: 0;
+}
+
+.tag-category-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d1d5db;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
