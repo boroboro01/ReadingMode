@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { supabase } from "../lib/supabaseClient"; // 추가
 import MainLayout from "../components/layout/MainLayout";
 import ContentContainer from "../components/layout/ContentContainer";
 import HorizontalList from "../components/list/HorizontalList";
@@ -9,34 +10,70 @@ import TagFilter from "../components/common/TagFilter";
 import type { Video } from "../types/video";
 import logo from "../assets/logo.png";
 
-// 1. 통합 데이터 가져오기
-import videoData from "../data/videoData.json";
+// 인터페이스 정의 (Supabase 데이터 구조와 일치)
+interface Playlist {
+  id: string;
+  title: string;
+  country: string;
+  era: string;
+  mood: string;
+  target_books: string;
+}
 
 function Home() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  // 카테고리별 태그 추출
+  // 1. Supabase에서 받아올 상태값 설정
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const [videos, setVideos] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // 2. 데이터 페칭 함수
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+
+      // 플레이리스트와 비디오를 동시에 가져옴
+      const [plRes, vidRes] = await Promise.all([
+        supabase
+          .from("playlists")
+          .select("*")
+          .order("display_order", { ascending: true })
+          .order("title", { ascending: true }),
+        supabase.from("videos").select("*"),
+      ]);
+
+      if (plRes.error || vidRes.error) {
+        console.error("데이터 로드 실패:", plRes.error || vidRes.error);
+      } else {
+        setPlaylists(plRes.data || []);
+        setVideos(vidRes.data || []);
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  // 3. 태그 카테고리 추출 (이제 videoData 대신 playlists 상태 사용)
   const tagCategories = useMemo(() => {
     const moodTags = new Set<string>();
     const eraTags = new Set<string>();
     const countryTags = new Set<string>();
 
-    videoData.playlists.forEach((playlist) => {
-      const parseTags = (tagString: string): string[] => {
-        if (!tagString || tagString.trim() === "") return [];
-        return tagString
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter((tag) => tag.length > 0);
-      };
+    const parseTags = (tagString: string): string[] => {
+      if (!tagString || tagString.trim() === "") return [];
+      return tagString
+        .split(",")
+        .map((t) => t.trim())
+        .filter((t) => t.startsWith("#"));
+    };
 
-      // 분위기 태그
-      parseTags(playlist.mood || "").forEach((tag) => moodTags.add(tag));
-      // 시대 태그
-      parseTags(playlist.era || "").forEach((tag) => eraTags.add(tag));
-      // 국가 태그
-      parseTags(playlist.country || "").forEach((tag) => countryTags.add(tag));
+    playlists.forEach((pl) => {
+      parseTags(pl.mood).forEach((t) => moodTags.add(t));
+      parseTags(pl.era).forEach((t) => eraTags.add(t));
+      parseTags(pl.country).forEach((t) => countryTags.add(t));
     });
 
     return [
@@ -44,66 +81,49 @@ function Home() {
       { title: "시대", tags: Array.from(eraTags).sort() },
       { title: "국가", tags: Array.from(countryTags).sort() },
     ];
-  }, []);
+  }, [playlists]); // playlists가 바뀔 때만 재계산
 
-  // 태그 필터링된 플레이리스트
+  // 4. 태그 필터링 로직 (filteredPlaylists)
   const filteredPlaylists = useMemo(() => {
-    if (selectedTags.length === 0) {
-      return videoData.playlists;
-    }
+    if (selectedTags.length === 0) return playlists;
 
-    return videoData.playlists.filter((playlist) => {
-      const parseTags = (tagString: string): string[] => {
-        if (!tagString || tagString.trim() === "") return [];
-        return tagString
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter((tag) => tag.length > 0);
-      };
+    return playlists.filter((pl) => {
+      // pl.country 등이 null일 경우를 대비해 빈 문자열("")로 치환 후 split 합니다.
+      const plTags = [
+        ...(pl.country || "").split(","),
+        ...(pl.era || "").split(","),
+        ...(pl.mood || "").split(","),
+      ].map((t) => t.trim());
 
-      const playlistTags = [
-        ...parseTags(playlist.country || ""),
-        ...parseTags(playlist.era || ""),
-        ...parseTags(playlist.mood || ""),
-      ];
-
-      return selectedTags.some((selectedTag) =>
-        playlistTags.includes(selectedTag)
-      );
+      return selectedTags.some((tag) => plTags.includes(tag));
     });
-  }, [selectedTags]);
+  }, [selectedTags, playlists]);
 
+  // 나머지 핸들러 (동일)
   const handleTagToggle = (tag: string) => {
-    setSelectedTags((prev) => {
-      if (prev.includes(tag)) {
-        return prev.filter((t) => t !== tag);
-      } else {
-        return [...prev, tag];
-      }
-    });
-  };
-
-  const handleClearAllTags = () => {
-    setSelectedTags([]);
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
   };
 
   const handleSelect = (v: any) => {
-    const youtubeId = v.youtube_id;
-    const thumbnail = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
-
     setSelectedVideo({
-      id: youtubeId,
+      id: v.youtube_id,
       title: v.title,
       author: v.author,
       duration: v.duration,
-      thumbnail,
+      thumbnail: `https://img.youtube.com/vi/${v.youtube_id}/hqdefault.jpg`,
       playlist_id: v.playlist_id,
     });
   };
 
+  if (loading)
+    return (
+      <div style={{ color: "white", padding: "20px" }}>데이터 로딩 중...</div>
+    );
+
   return (
     <MainLayout>
-      {/* 헤더 UI */}
       <header
         style={{
           display: "flex",
@@ -125,24 +145,20 @@ function Home() {
         />
       </header>
 
-      {/* 태그 필터 UI */}
       <ContentContainer>
         <TagFilter
           categories={tagCategories}
           selectedTags={selectedTags}
           onTagToggle={handleTagToggle}
-          onClearAll={handleClearAllTags}
+          onClearAll={() => setSelectedTags([])}
         />
       </ContentContainer>
 
-      {/* 2. 필터링된 플레이리스트 렌더링 */}
       {filteredPlaylists.map((playlist) => {
-        // 해당 플리에 속한 영상들만 필터링
-        const filteredVideos = videoData.videos.filter(
+        // 비디오 상태에서 필터링
+        const filteredVideos = videos.filter(
           (v) => v.playlist_id === playlist.id
         );
-
-        // 혹시 영상이 하나도 없는 플리는 화면에서 건너뜁니다
         if (filteredVideos.length === 0) return null;
 
         return (
@@ -179,7 +195,6 @@ function Home() {
           </section>
         );
       })}
-
       <Player selectedVideo={selectedVideo} />
     </MainLayout>
   );
