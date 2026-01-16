@@ -19,7 +19,7 @@
 .scroll-nav {
   position: absolute;
   top: 0;
-  bottom: 0;
+  height: calc(280px * 9 / 16); /* 썸네일 높이만큼 (16:9 비율) */
   width: 72px;
 
   display: flex;
