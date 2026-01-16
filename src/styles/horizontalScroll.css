@@ -1,5 +1,7 @@
 .horizontal-wrapper {
   position: relative;
+  /* ContentContainer의 좌측 패딩(60px)을 상쇄하여 화면 끝까지 확장 */
+  margin-left: -60px;
 }
 
 /* 스크롤 영역 */
@@ -7,7 +9,7 @@
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  padding-bottom: 8px;
+  padding: 0 0 8px 60px; /* 좌측에 60px 패딩 추가 */
   scrollbar-width: none;
 }
 
@@ -19,12 +21,13 @@
 .scroll-nav {
   position: absolute;
   top: 0;
-  height: calc(280px * 9 / 16); /* 썸네일 높이만큼 (16:9 비율) */
+  bottom: 0; /* 전체 높이로 확장 */
   width: 72px;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* 상단 정렬로 변경 */
   justify-content: center;
+  padding-top: calc(280px * 9 / 16 / 2 - 16px); /* 썸네일 중앙에 아이콘 위치 */
 
   opacity: 0;
   pointer-events: none;
@@ -43,7 +46,7 @@
 
 /* 좌측 */
 .scroll-nav.left {
-  left: 0;
+  left: 0; /* 화면 끝에 붙음 */
   background: linear-gradient(
     to right,
     rgba(52, 52, 52, 0.85),
