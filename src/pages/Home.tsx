@@ -4,6 +4,7 @@ import ContentContainer from "../components/layout/ContentContainer";
 import HorizontalList from "../components/list/HorizontalList";
 import VideoCard from "../components/card/VideoCard";
 import Player from "../components/Player/Player";
+import PlaylistTags from "../components/common/PlaylistTags";
 import type { Video } from "../types/video";
 import logo from "../assets/logo.png";
 
@@ -66,10 +67,15 @@ function Home() {
             <ContentContainer>
               <h2
                 className="page-title"
-                style={{ fontSize: "1.5rem", marginBottom: "16px" }}
+                style={{ fontSize: "1.5rem", marginBottom: "8px" }}
               >
                 {playlist.title}
               </h2>
+              <PlaylistTags
+                country={playlist.country}
+                era={playlist.era}
+                mood={playlist.mood}
+              />
             </ContentContainer>
 
             <div style={{ padding: "0 20px" }}>
