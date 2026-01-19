@@ -26,6 +26,7 @@ interface Playlist {
 function Home() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [isPlayerExpanded, setIsPlayerExpanded] = useState(false); // 플레이어 확장 상태 관리
 
   // 1. Supabase에서 받아올 상태값 설정
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
@@ -333,7 +334,12 @@ function Home() {
         })
       )}
 
-      <Player selectedVideo={selectedVideo} onVideoEnd={playNextVideo} />
+      <Player
+        selectedVideo={selectedVideo}
+        onVideoEnd={playNextVideo}
+        isExpanded={isPlayerExpanded}
+        onExpandedChange={setIsPlayerExpanded}
+      />
     </MainLayout>
   );
 }

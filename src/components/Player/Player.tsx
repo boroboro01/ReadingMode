@@ -13,12 +13,13 @@ import {
 interface Props {
   selectedVideo: Video | null;
   onVideoEnd?: () => void;
+  isExpanded: boolean;
+  onExpandedChange: (expanded: boolean) => void;
 }
 
 const Player = (props: Props) => {
-  const { selectedVideo, onVideoEnd } = props;
+  const { selectedVideo, onVideoEnd, isExpanded, onExpandedChange } = props;
 
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [pendingPlay, setPendingPlay] = useState(false);
   const [volume, setVolume] = useState<number>(60);
@@ -41,7 +42,7 @@ const Player = (props: Props) => {
       e.preventDefault();
       if (!playerRef.current) {
         setPendingPlay(true);
-        setIsExpanded(true);
+        onExpandedChange(true);
         return;
       }
       if (isPlaying) playerRef.current.pauseVideo();
@@ -105,7 +106,7 @@ const Player = (props: Props) => {
     e.stopPropagation();
     if (!playerRef.current) {
       setPendingPlay(true);
-      setIsExpanded(true);
+      onExpandedChange(true);
       return;
     }
     if (isPlaying) playerRef.current.pauseVideo();
@@ -144,14 +145,14 @@ const Player = (props: Props) => {
     <div
       className={`player-container visible ${isExpanded ? "expanded" : "mini"}`}
       onClick={() => {
-        if (!isExpanded) setIsExpanded(true);
+        if (!isExpanded) onExpandedChange(true);
       }}
     >
       <div
         className="mini-bar"
         onClick={(e) => {
           e.stopPropagation();
-          setIsExpanded((prev) => !prev);
+          onExpandedChange(!isExpanded);
         }}
       >
         <img src={selectedVideo.thumbnail} alt="thumb" className="thumb" />
