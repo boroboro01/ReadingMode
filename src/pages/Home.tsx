@@ -321,8 +321,8 @@ function Home() {
               }
             }}
             onClick={() => {
-              // 의견 남기기 기능 추가 예정
-              alert("의견 남기기 기능이 곧 추가될 예정입니다!");
+              // 의견 남기기 폼을 새 창에서 열기
+              window.open("https://tally.so/r/GxpAk2", "_blank");
             }}
           >
             의견 남기기
