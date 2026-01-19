@@ -51,6 +51,17 @@
 
 /* Hide volume controls on mobile but keep thumbnail and prev/next */
 @media (max-width: 768px) {
+  /* 모바일에서 확장된 플레이어가 주소창에 가려지지 않도록 높이 조정 */
+  .player-container {
+    height: 100dvh; /* dynamic viewport height 사용 */
+  }
+
+  /* 모바일에서 확장 시 주소창 공간 고려 */
+  .player-container.expanded {
+    transform: translateY(0);
+    top: env(safe-area-inset-top, 0px); /* iOS safe area 고려 */
+  }
+
   .player-container .mini-bar .thumb {
     width: 70px;
     height: 39px;
@@ -62,11 +73,6 @@
     display: none;
   }
 
-  /* Show volume controls in mobile expanded player */
-  .mobile-volume-wrapper .mini-controls {
-    display: flex !important;
-  }
-
   /* Move controls to right side on mobile */
   .player-container .mini-center {
     position: static;
@@ -76,12 +82,9 @@
     margin-right: 8px;
   }
 
-  /* Mobile volume wrapper in expanded player */
-  .mobile-volume-wrapper {
-    display: flex;
-    justify-content: center;
-    padding: 16px;
-    margin: 16px 0;
+  /* 모바일에서 YouTube wrapper 높이 조정 */
+  .youtube-wrapper {
+    max-height: 50vh; /* 모바일에서는 더 작게 */
   }
 }
 
