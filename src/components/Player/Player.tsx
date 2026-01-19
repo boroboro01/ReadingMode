@@ -16,11 +16,6 @@ interface Props {
 }
 
 const Player = (props: Props) => {
-  // 모든 props 로깅
-  console.log("Player component ALL PROPS:", props);
-  console.log("onVideoEnd exists:", "onVideoEnd" in props);
-  console.log("onVideoEnd value:", props.onVideoEnd);
-
   const { selectedVideo, onVideoEnd } = props;
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -29,16 +24,6 @@ const Player = (props: Props) => {
   const [volume, setVolume] = useState<number>(60);
   const [muted, setMuted] = useState<boolean>(false);
   const playerRef = useRef<any>(null);
-
-  // Props 디버깅
-  useEffect(() => {
-    console.log("Player component received props:", {
-      hasSelectedVideo: !!selectedVideo,
-      selectedVideoTitle: selectedVideo?.title,
-      hasOnVideoEnd: !!onVideoEnd,
-      onVideoEndType: typeof onVideoEnd,
-    });
-  }, [selectedVideo, onVideoEnd]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -227,7 +212,6 @@ const Player = (props: Props) => {
             onReady={onReady}
             onStateChange={onStateChange}
             onEnd={() => {
-              console.log("Video Ended - Moving to Next Video");
               if (onVideoEnd) {
                 onVideoEnd(); // Home의 playNextVideo를 여기서 딱 한 번만 호출
               }

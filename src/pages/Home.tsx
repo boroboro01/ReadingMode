@@ -334,26 +334,6 @@ function Home() {
       )}
 
       <Player selectedVideo={selectedVideo} onVideoEnd={playNextVideo} />
-
-      {/* 디버깅을 위한 임시 로그 */}
-      {selectedVideo && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            right: 0,
-            background: "black",
-            color: "white",
-            padding: "10px",
-            zIndex: 1000,
-          }}
-        >
-          Current: {selectedVideo.title}
-          <br />
-          Has playNextVideo:{" "}
-          {typeof playNextVideo === "function" ? "Yes" : "No"}
-        </div>
-      )}
     </MainLayout>
   );
 }
