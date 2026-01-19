@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { supabase } from "../lib/supabaseClient"; // 추가
 import MainLayout from "../components/layout/MainLayout";
+import Header from "../components/layout/Header";
 import ContentContainer from "../components/layout/ContentContainer";
 import HorizontalList from "../components/list/HorizontalList";
 import VideoCard from "../components/card/VideoCard";
@@ -9,7 +10,6 @@ import PlaylistTags from "../components/common/PlaylistTags";
 import TagFilter from "../components/common/TagFilter";
 import IntroSection from "../components/common/IntroSection";
 import type { Video } from "../types/video";
-import logo from "../assets/logo.png";
 import "../styles/intro.css";
 
 // 인터페이스 정의 (Supabase 데이터 구조와 일치)
@@ -276,93 +276,12 @@ function Home() {
 
   return (
     <MainLayout>
-      <header
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "24px 60px",
-          backgroundColor: "rgba(0, 0, 0, 0.7)",
-        }}
-      >
-        <img
-          src={logo}
-          alt="독서 모드 로고"
-          style={{
-            height: "36px",
-            width: "auto",
-          }}
-        />
-        <div style={{ position: "relative" }}>
-          <button
-            style={{
-              padding: "8px 16px",
-              backgroundColor: "transparent",
-              border: "1px solid #374151",
-              borderRadius: "6px",
-              color: "#e5e7eb",
-              fontSize: "14px",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-            onMouseEnter={(e) => {
-              const target = e.target as HTMLElement;
-              target.style.backgroundColor = "#374151";
-              target.style.borderColor = "#6b7280";
-            }}
-            onMouseLeave={(e) => {
-              const target = e.target as HTMLElement;
-              target.style.backgroundColor = "transparent";
-              target.style.borderColor = "#374151";
-              if (!hasHovered) {
-                setHasHovered(true);
-                setShowTooltip(false);
-              }
-            }}
-            onClick={() => {
-              // 의견 남기기 폼을 새 창에서 열기
-              window.open("https://tally.so/r/GxpAk2", "_blank");
-            }}
-          >
-            의견 남기기
-          </button>
-          {showTooltip && !hasHovered && (
-            <div
-              style={{
-                position: "absolute",
-                top: "calc(100% + 8px)",
-                right: "0",
-                backgroundColor: "#111111",
-                color: "white",
-                padding: "8px 12px",
-                borderRadius: "6px",
-                fontSize: "12px",
-                whiteSpace: "nowrap",
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
-                zIndex: 1000,
-                opacity: 1,
-                animation: "fadeIn 0.2s ease",
-                textAlign: "right",
-              }}
-            >
-              의견을 남겨주시면 기프티콘을 드려요 ☺️
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "100%",
-                  right: "12px",
-                  width: 0,
-                  height: 0,
-                  borderLeft: "6px solid transparent",
-                  borderRight: "6px solid transparent",
-                  borderBottom: "6px solid #111111",
-                }}
-              />
-            </div>
-          )}
-        </div>
-      </header>
+      <Header
+        hasHovered={hasHovered}
+        setHasHovered={setHasHovered}
+        showTooltip={showTooltip}
+        setShowTooltip={setShowTooltip}
+      />
 
       <IntroSection />
 
@@ -411,10 +330,7 @@ function Home() {
           return (
             <section key={playlist.id} style={{ marginBottom: "20px" }}>
               <ContentContainer>
-                <h2
-                  className="page-title"
-                  style={{ fontSize: "1.5rem", marginBottom: "8px" }}
-                >
+                <h2 className="page-title" style={{ marginBottom: "8px" }}>
                   {playlist.title}
                 </h2>
                 <PlaylistTags
@@ -465,9 +381,9 @@ function Home() {
         }}
       >
         <div
+          className="footer-text"
           style={{
             color: "#9ca3af",
-            fontSize: "14px",
             letterSpacing: "1.5px",
             lineHeight: "1.6",
           }}
