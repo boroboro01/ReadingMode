@@ -8,6 +8,8 @@ import {
   faVolumeHigh,
   faVolumeLow,
   faVolumeXmark,
+  faExpand,
+  faCompress,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
@@ -149,7 +151,10 @@ const Player = (props: Props) => {
       }}
     >
       <div
-        className="mini-bar"
+        className={`mini-bar ${!isExpanded ? "mini-bar-hoverable" : ""}`}
+        title={
+          !isExpanded ? "클릭하여 플레이어 확장" : "클릭하여 플레이어 축소"
+        }
         onClick={(e) => {
           e.stopPropagation();
           onExpandedChange(!isExpanded);
@@ -160,6 +165,14 @@ const Player = (props: Props) => {
           <div className="title">{selectedVideo.title}</div>
           <div className="author">{selectedVideo.author}</div>
         </div>
+
+        {/* 중앙 재생 버튼 */}
+        <div className="mini-center">
+          <button className="play-btn" onClick={togglePlay}>
+            {isPlaying ? "❚❚" : "▶"}
+          </button>
+        </div>
+
         <div className="mini-right">
           <div className="mini-controls" onClick={(e) => e.stopPropagation()}>
             <FontAwesomeIcon
@@ -181,8 +194,16 @@ const Player = (props: Props) => {
               onChange={onVolumeInput}
             />
           </div>
-          <button className="play-btn" onClick={togglePlay}>
-            {isPlaying ? "❚❚" : "▶"}
+          {/* 맨 오른쪽 확장/축소 버튼 */}
+          <button
+            className="expand-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              onExpandedChange(!isExpanded);
+            }}
+            title={isExpanded ? "축소" : "확장"}
+          >
+            <FontAwesomeIcon icon={isExpanded ? faCompress : faExpand} />
           </button>
         </div>
       </div>
