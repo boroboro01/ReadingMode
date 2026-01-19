@@ -458,6 +458,7 @@ function Home() {
           borderTop: "1px solid #374151",
           padding: "24px 0",
           marginTop: "80px",
+          marginBottom: selectedVideo ? "70px" : "0",
           textAlign: "center",
         }}
       >
