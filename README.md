@@ -2,8 +2,7 @@
   
 # ReadWithMusic
 
-
-<img width="1875" height="1025" alt="image" src="https://github.com/user-attachments/assets/27cd5cd0-6435-4d00-8130-678a5b570c7d" />
+<img width="1408" height="844" alt="image" src="https://github.com/user-attachments/assets/13451d21-d4dc-4df1-9b6d-89cac017b451" />
 
 ReadWithMusic은 완벽한 독서 분위기를 만들어주는 음악 큐레이션 서비스입니다
 
