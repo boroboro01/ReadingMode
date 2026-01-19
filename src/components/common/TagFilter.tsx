@@ -24,9 +24,7 @@ const TagFilter: React.FC<TagFilterProps> = ({
   return (
     <div className="tag-filter">
       <div className="tag-filter-header">
-        <span className="tag-filter-title">
-          원하는 태그를 골라 빠르게 찾아보세요
-        </span>
+        <span className="tag-filter-title">어떤 책을 읽으시나요?</span>
         {selectedTags.length > 0 && (
           <button className="clear-all-btn" onClick={onClearAll}>
             전체 해제
